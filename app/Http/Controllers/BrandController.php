@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class BrandController extends Controller
 {
@@ -13,7 +14,14 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        //Tạo đối tượng của model
+        $objBrand = new Brand();
+        //Gọi đến function để lấy dữ liệu trong model
+        $brands = $objBrand->index();
+        //Gui len view
+        return view('brands.index', [
+            'brands' => $brands
+        ]);
     }
 
     /**
@@ -21,7 +29,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        return view('brands.create');
     }
 
     /**
@@ -29,7 +37,14 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request)
     {
-        //
+        //Tạo đối tượng model
+        $obj = new Brand();
+        //Lấy dữ liệu từ form
+        $obj->name = $request->name;
+        //Gọi function lưu dữ liệu trong model
+        $obj->createBrand();
+        //Quay về danh sách
+        return Redirect::route('brands.index');
     }
 
     /**
@@ -45,7 +60,10 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        //
+        //Gọi view hiển thị form update
+        return view('brands.edit', [
+            'brand' => $brand
+        ]);
     }
 
     /**
@@ -53,7 +71,12 @@ class BrandController extends Controller
      */
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
-        //
+        //Lấy dữ liệu
+        $brand->name = $request->name;
+        //Gọi function để update dữ liệu trong model
+        $brand->updateBrand();
+        //Quay về danh sách
+        return Redirect::route('brands.index');
     }
 
     /**
@@ -61,6 +84,9 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        //Gọi function xóa bản ghi trong db
+        $brand->deleteBrand();
+        //Quay lại danh sách
+        return Redirect::route('brands.index');
     }
 }
