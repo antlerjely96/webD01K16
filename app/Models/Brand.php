@@ -20,9 +20,9 @@ class Brand extends Model
     //Tắt timestamp (created_at, updated_at)
     public $timestamps = false;
 
-    /* Query Builder
+    /* Query Builder */
         //Function lấy dữ liệu
-        public function index()
+        public function index(): \Illuminate\Support\Collection
         {
             //Query builder lấy dữ liệu
             $brands = DB::table('brands')->get();
@@ -31,7 +31,7 @@ class Brand extends Model
         }
 
         //Function lưu dữ liệu lên db
-        public function createBrand()
+        public function createBrand(): void
         {
             //Query builder lưu dữ liệu lên db
             DB::table('brands')->insert([
@@ -40,7 +40,7 @@ class Brand extends Model
         }
 
         //Function update dữ liệu trên db
-        public function updateBrand()
+        public function updateBrand(): void
         {
             //Query builder update dữ liệu
             DB::table('brands')
@@ -51,12 +51,11 @@ class Brand extends Model
         }
 
         //Function xóa dữ liệu trên db
-        public function deleteBrand()
+        public function deleteBrand(): void
         {
             //query builder xóa dữ liệu
             DB::table('brands')
                 ->where('id', $this->id)
                 ->delete();
         }
-    */
 }
