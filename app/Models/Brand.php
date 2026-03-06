@@ -20,7 +20,11 @@ class Brand extends Model
     //Tắt timestamp (created_at, updated_at)
     public $timestamps = false;
 
-    /* Query Builder */
+    // Relationship Brand - Shoe: 1 - n
+    public function shoes(){
+        return $this->hasMany(Shoe::class);
+    }
+    /* Query Builder
         //Function lấy dữ liệu
         public function index(): \Illuminate\Support\Collection
         {
@@ -58,4 +62,5 @@ class Brand extends Model
                 ->where('id', $this->id)
                 ->delete();
         }
+    */
 }

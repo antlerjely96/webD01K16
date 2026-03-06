@@ -29,10 +29,10 @@
                     {{ $shoe->description }}
                 </td>
                 <td>
-                    {{ $shoe->type_name }}
+                    {{ $shoe->type->name }}
                 </td>
                 <td>
-                    {{ $shoe->brand_name }}
+                    {{ $shoe->brand->name }}
                 </td>
                 <td>
                     <a href="{{ route('shoes.edit', $shoe->id) }}">Edit</a>

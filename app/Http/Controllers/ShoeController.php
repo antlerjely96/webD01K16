@@ -16,11 +16,23 @@ class ShoeController extends Controller
      */
     public function index()
     {
-        //Tạo đối tượng của model
-        $obj = new Shoe();
-        //Lấy dữ liệu từ DB: Gọi function trong model
-        $shoes = $obj->getAllShoes();
-        //Gọi view hiển thị danh sách
+        /* Query Builder
+            //Tạo đối tượng của model
+            $obj = new Shoe();
+            //Lấy dữ liệu từ DB: Gọi function trong model
+            $shoes = $obj->getAllShoes();
+            //Gọi view hiển thị danh sách
+            return view('shoes.index', [
+                'shoes' => $shoes
+            ]);
+        */
+
+        /* ORM Eloquent */
+        //Lấy dữ liệu
+        $shoes = Shoe::with('brand')
+                    ->with('type')
+                    ->get();
+        //Gọi view
         return view('shoes.index', [
             'shoes' => $shoes
         ]);
@@ -31,15 +43,27 @@ class ShoeController extends Controller
      */
     public function create()
     {
-        //Lấy brand, type để truyền sang view
-        //Tạo đối tượng của brand
-        $objBrand = new Brand();
-        //Gọi function trong Brand model
-        $brands = $objBrand->index();
-        //Tạo đối tượng của type
-        $objType = new Type();
-        //Gọi function trong Type model
-        $types = $objType->getAllTypes();
+        /* Query Builder
+            //Lấy brand, type để truyền sang view
+            //Tạo đối tượng của brand
+            $objBrand = new Brand();
+            //Gọi function trong Brand model
+            $brands = $objBrand->index();
+            //Tạo đối tượng của type
+            $objType = new Type();
+            //Gọi function trong Type model
+            $types = $objType->getAllTypes();
+            return view('shoes.create', [
+                'brands' => $brands,
+                'types' => $types
+            ]);
+        */
+
+        /* ORM Eloquent */
+        //Lấy các PK
+        $brands = Brand::all();
+        $types = Type::all();
+        //Gọi đến view
         return view('shoes.create', [
             'brands' => $brands,
             'types' => $types
@@ -51,15 +75,28 @@ class ShoeController extends Controller
      */
     public function store(StoreShoeRequest $request)
     {
-        //Tạo đối tượng của model
-        $shoe = new Shoe();
-        //Lấy dữ liệu từ form về
-        $shoe->name = $request->name;
-        $shoe->description = $request->description;
-        $shoe->brand_id = $request->brand_id;
-        $shoe->type_id = $request->type_id;
-        //Gọi function lưu dữ liệu trong model
-        $shoe->createShoe();
+        /* Query Builder
+            //Tạo đối tượng của model
+            $shoe = new Shoe();
+            //Lấy dữ liệu từ form về
+            $shoe->name = $request->name;
+            $shoe->description = $request->description;
+            $shoe->brand_id = $request->brand_id;
+            $shoe->type_id = $request->type_id;
+            //Gọi function lưu dữ liệu trong model
+            $shoe->createShoe();
+            //Quay về danh sách
+            return Redirect::route('shoes.index');
+        */
+
+        /* ORM Eloquent */
+        //Lấy dữ liệu và lưu
+        Shoe::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'brand_id' => $request->brand_id,
+            'type_id' => $request->type_id,
+        ]);
         //Quay về danh sách
         return Redirect::route('shoes.index');
     }
@@ -77,15 +114,28 @@ class ShoeController extends Controller
      */
     public function edit(Shoe $shoe)
     {
-        //Tạo đối tượng của brand
-        $objBrand = new Brand();
-        //Gọi function trong Brand model
-        $brands = $objBrand->index();
-        //Tạo đối tượng của type
-        $objType = new Type();
-        //Gọi function trong Type model
-        $types = $objType->getAllTypes();
-        //Gọi view edit
+        /* Query Builder
+            //Tạo đối tượng của brand
+            $objBrand = new Brand();
+            //Gọi function trong Brand model
+            $brands = $objBrand->index();
+            //Tạo đối tượng của type
+            $objType = new Type();
+            //Gọi function trong Type model
+            $types = $objType->getAllTypes();
+            //Gọi view edit
+            return view('shoes.edit', [
+                'shoe' => $shoe,
+                'brands' => $brands,
+                'types' => $types
+            ]);
+        */
+
+        /* ORM Eloquent */
+        //Lấy các bảng PK
+        $brands = Brand::all();
+        $types = Type::all();
+        //Gọi view
         return view('shoes.edit', [
             'shoe' => $shoe,
             'brands' => $brands,
@@ -98,13 +148,26 @@ class ShoeController extends Controller
      */
     public function update(UpdateShoeRequest $request, Shoe $shoe)
     {
-        //Lấy dữ liệu trong form
-        $shoe->name = $request->name;
-        $shoe->description = $request->description;
-        $shoe->brand_id = $request->brand_id;
-        $shoe->type_id = $request->type_id;
-        //Gọi function trong model
-        $shoe->updateShoe();
+        /* Query Builder
+            //Lấy dữ liệu trong form
+            $shoe->name = $request->name;
+            $shoe->description = $request->description;
+            $shoe->brand_id = $request->brand_id;
+            $shoe->type_id = $request->type_id;
+            //Gọi function trong model
+            $shoe->updateShoe();
+            //Quay về danh sách
+            return Redirect::route('shoes.index');
+        */
+
+        /* ORM Eloquent */
+        //Lấy dữ liệu và lưu
+        $shoe->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'brand_id' => $request->brand_id,
+            'type_id' => $request->type_id,
+        ]);
         //Quay về danh sách
         return Redirect::route('shoes.index');
     }
@@ -114,9 +177,17 @@ class ShoeController extends Controller
      */
     public function destroy(Shoe $shoe)
     {
-        //Gọi function xóa trong model
-        $shoe->deleteShoe();
-        //Quay lại danh sách
+        /* Query Builder
+            //Gọi function xóa trong model
+            $shoe->deleteShoe();
+            //Quay lại danh sách
+            return Redirect::route('shoes.index');
+        */
+
+        /* ORM Eloquent */
+        //Xóa bản ghi
+        $shoe->delete();
+        //Quay về danh sách
         return Redirect::route('shoes.index');
     }
 }

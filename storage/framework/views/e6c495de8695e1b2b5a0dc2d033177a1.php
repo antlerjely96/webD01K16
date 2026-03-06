@@ -32,11 +32,11 @@
 
                 </td>
                 <td>
-                    <?php echo e($shoe->type_name); ?>
+                    <?php echo e($shoe->type->name); ?>
 
                 </td>
                 <td>
-                    <?php echo e($shoe->brand_name); ?>
+                    <?php echo e($shoe->brand->name); ?>
 
                 </td>
                 <td>
