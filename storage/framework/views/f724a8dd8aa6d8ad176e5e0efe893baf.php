@@ -1,14 +1,12 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-</head>
-<body>
-    <h3>Brand List</h3>
+
+
+<?php $__env->startSection('content-header'); ?>
+    Brand List
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('main'); ?>
     <a href="<?php echo e(route('brands.create')); ?>">Add a brand</a>
-    <table border="1px" cellpadding="0" cellspacing="0" width="100%">
+    <table class="table">
         <tr>
             <th>ID</th>
             <th>Name</th>
@@ -38,6 +36,6 @@
             </tr>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </table>
-</body>
-</html>
-<?php /**PATH C:\xampp\htdocs\webD01K16\resources\views/brands/index.blade.php ENDPATH**/ ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\webD01K16\resources\views/brands/index.blade.php ENDPATH**/ ?>

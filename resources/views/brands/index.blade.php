@@ -1,14 +1,12 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-</head>
-<body>
-    <h3>Brand List</h3>
+@extends('layouts.layout')
+
+@section('content-header')
+    Brand List
+@endsection
+
+@section('main')
     <a href="{{ route('brands.create') }}">Add a brand</a>
-    <table border="1px" cellpadding="0" cellspacing="0" width="100%">
+    <table class="table">
         <tr>
             <th>ID</th>
             <th>Name</th>
@@ -36,5 +34,4 @@
             </tr>
         @endforeach
     </table>
-</body>
-</html>
+@endsection
