@@ -3,10 +3,15 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('layouts.layout');
+    return bcrypt('123456');
 });
 
-Route::prefix('/admins')
+Route::get('/login', [\App\Http\Controllers\AdminController::class, 'login'])
+    ->name('admins.login');
+Route::post('/login', [\App\Http\Controllers\AdminController::class, 'loginProcess'])
+    ->name('admins.loginProcess');
+
+Route::middleware('authAdmin')->prefix('/admins')
     ->group(function(){
         Route::controller(\App\Http\Controllers\BrandController::class)
             ->name('brands.')

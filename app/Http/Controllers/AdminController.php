@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
@@ -62,5 +66,26 @@ class AdminController extends Controller
     public function destroy(Admin $admin)
     {
         //
+    }
+
+    /**
+     * Show admin login form
+     */
+    public function login()
+    {
+        return view('admins.index');
+    }
+
+    /**
+     * Process Login
+     */
+    public function loginProcess(Request $request)
+    {
+        if(Auth::guard('admin')->attempt($request->only('email', 'password'))){
+            $request->session()->regenerate();
+            return Redirect::route('brands.index');
+        } else {
+            return Redirect::back();
+        }
     }
 }
