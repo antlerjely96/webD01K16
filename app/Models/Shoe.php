@@ -13,7 +13,7 @@ class Shoe extends Model
 
     protected $table = 'shoes';
     protected $primaryKey = 'id';
-    protected $fillable = ['name', 'description', 'type_id', 'brand_id'];
+    protected $fillable = ['name', 'description', 'type_id', 'brand_id', 'image'];
     public $timestamps = false;
 
     //Relationship: Shoe - Brand: 1 - 1

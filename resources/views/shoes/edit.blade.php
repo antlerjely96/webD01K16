@@ -6,10 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('shoes.update', $shoe->id) }}" method="POST">
+    <form action="{{ route('shoes.update', $shoe->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         Name: <input type="text" name="name" value="{{ $shoe->name }}"><br>
+        Image: <input type="file" name="image"><br>
         Description: <textarea name="description">
             {{ $shoe->description }}
         </textarea><br>

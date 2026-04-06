@@ -11,6 +11,7 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Image</th>
             <th>Description</th>
             <th>Type</th>
             <th>Brand</th>
@@ -24,6 +25,9 @@
                 </td>
                 <td>
                     {{ $shoe->name }}
+                </td>
+                <td>
+                    <img src="{{ asset(\Illuminate\Support\Facades\Storage::url("Images/" . $shoe->image)) }}" alt="image" width="100px" height="100px">
                 </td>
                 <td>
                     {{ $shoe->description }}

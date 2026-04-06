@@ -8,6 +8,7 @@ use App\Http\Requests\StoreShoeRequest;
 use App\Http\Requests\UpdateShoeRequest;
 use App\Models\Type;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class ShoeController extends Controller
 {
@@ -91,12 +92,24 @@ class ShoeController extends Controller
 
         /* ORM Eloquent */
         //Lấy dữ liệu và lưu
-        Shoe::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'brand_id' => $request->brand_id,
-            'type_id' => $request->type_id,
-        ]);
+        $image = $request->file('image');
+        if($image != null){
+            $imageName = $image->getClientOriginalName();
+            Shoe::create([
+                'name' => $request->name,
+                'description' => $request->description,
+                'brand_id' => $request->brand_id,
+                'type_id' => $request->type_id,
+                'image' => $imageName
+            ]);
+            //Kiểm tra ảnh tồn tại trong thư mục hay chưa
+            if(!Storage::fileExists("/Images/" . $imageName)){
+//                dd($image);
+                //Lưu ảnh vào storage
+                Storage::putFileAs("/Images/", $request->file('image'), $imageName);
+            }
+        }
+
         //Quay về danh sách
         return Redirect::route('shoes.index');
     }
@@ -162,12 +175,30 @@ class ShoeController extends Controller
 
         /* ORM Eloquent */
         //Lấy dữ liệu và lưu
-        $shoe->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'brand_id' => $request->brand_id,
-            'type_id' => $request->type_id,
-        ]);
+        $image = $request->file('image');
+        if($image == null){
+            $shoe->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'brand_id' => $request->brand_id,
+                'type_id' => $request->type_id,
+            ]);
+        } else {
+            $imageName = $image->getClientOriginalName();
+            $shoe->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'brand_id' => $request->brand_id,
+                'type_id' => $request->type_id,
+                'image' => $imageName
+            ]);
+            //Kiểm tra ảnh tồn tại trong thư mục hay chưa
+            if(!Storage::fileExists("/Images/" . $imageName)){
+//                dd($image);
+                //Lưu ảnh vào storage
+                Storage::putFileAs("/Images/", $request->file('image'), $imageName);
+            }
+        }
         //Quay về danh sách
         return Redirect::route('shoes.index');
     }

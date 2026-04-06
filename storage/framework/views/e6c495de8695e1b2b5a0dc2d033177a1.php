@@ -11,6 +11,7 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Image</th>
             <th>Description</th>
             <th>Type</th>
             <th>Brand</th>
@@ -26,6 +27,9 @@
                 <td>
                     <?php echo e($shoe->name); ?>
 
+                </td>
+                <td>
+                    <img src="<?php echo e(asset(\Illuminate\Support\Facades\Storage::url("Images/" . $shoe->image))); ?>" alt="image" width="100px" height="100px">
                 </td>
                 <td>
                     <?php echo e($shoe->description); ?>

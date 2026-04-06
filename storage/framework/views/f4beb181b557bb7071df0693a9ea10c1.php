@@ -6,10 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="<?php echo e(route('shoes.update', $shoe->id)); ?>" method="POST">
+    <form action="<?php echo e(route('shoes.update', $shoe->id)); ?>" method="POST" enctype="multipart/form-data">
         <?php echo csrf_field(); ?>
         <?php echo method_field('PUT'); ?>
         Name: <input type="text" name="name" value="<?php echo e($shoe->name); ?>"><br>
+        Image: <input type="file" name="image"><br>
         Description: <textarea name="description">
             <?php echo e($shoe->description); ?>
 

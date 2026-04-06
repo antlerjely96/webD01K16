@@ -6,9 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('shoes.create') }}" method="POST">
+    <form action="{{ route('shoes.create') }}" method="POST" enctype="multipart/form-data">
         @csrf
         Name: <input type="text" name="name"><br>
+        Image: <input type="file" name="image"><br>
         Description: <textarea name="description"></textarea><br>
         Brand: <select name="brand_id">
             @foreach($brands as $brand)

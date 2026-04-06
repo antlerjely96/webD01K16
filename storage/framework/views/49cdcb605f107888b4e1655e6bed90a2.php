@@ -6,9 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="<?php echo e(route('shoes.create')); ?>" method="POST">
+    <form action="<?php echo e(route('shoes.create')); ?>" method="POST" enctype="multipart/form-data">
         <?php echo csrf_field(); ?>
         Name: <input type="text" name="name"><br>
+        Image: <input type="file" name="image"><br>
         Description: <textarea name="description"></textarea><br>
         Brand: <select name="brand_id">
             <?php $__currentLoopData = $brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
