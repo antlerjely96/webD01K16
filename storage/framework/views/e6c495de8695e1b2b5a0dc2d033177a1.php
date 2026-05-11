@@ -17,6 +17,7 @@
             <th>Brand</th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
         <?php $__currentLoopData = $shoes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $shoe): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
@@ -42,6 +43,9 @@
                 <td>
                     <?php echo e($shoe->brand->name); ?>
 
+                </td>
+                <td>
+                    <a href="<?php echo e(route('carts.addToCart', $shoe->id)); ?>">Add to cart</a>
                 </td>
                 <td>
                     <a href="<?php echo e(route('shoes.edit', $shoe->id)); ?>">Edit</a>

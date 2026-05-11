@@ -60,4 +60,23 @@ Route::middleware('authAdmin')->prefix('/admins')
                 Route::delete('/{shoe}',  'destroy')
                     ->name('destroy');
             });
+        Route::controller(\App\Http\Controllers\CartController::class)
+            ->name('carts.')
+            ->prefix('/carts')
+            ->group(function(){
+                Route::get('/', 'index')
+                    ->name('index');
+                Route::get('/addToCart/{shoe}', 'addtoCart')
+                    ->name('addToCart');
+                Route::post('/updateCart', 'updateCart')
+                    ->name('updateCart');
+                Route::get('/removeOneProduct/{shoe}','removeOneProduct')
+                    ->name('removeOneProduct');
+                Route::get('/deleteCart', 'deleteCart')
+                    ->name('deleteCart');
+                Route::get('/plus/{shoe}', 'plus')
+                    ->name('plus');
+                Route::get('/minus/{shoe}', 'minus')
+                    ->name('minus');
+            });
     });

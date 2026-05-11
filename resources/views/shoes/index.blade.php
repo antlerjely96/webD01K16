@@ -17,6 +17,7 @@
             <th>Brand</th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
         @foreach($shoes as $shoe)
             <tr>
@@ -37,6 +38,9 @@
                 </td>
                 <td>
                     {{ $shoe->brand->name }}
+                </td>
+                <td>
+                    <a href="{{ route('carts.addToCart', $shoe->id) }}">Add to cart</a>
                 </td>
                 <td>
                     <a href="{{ route('shoes.edit', $shoe->id) }}">Edit</a>
